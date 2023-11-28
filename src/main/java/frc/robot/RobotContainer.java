@@ -25,6 +25,12 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
+import com.pathplanner.lib.auto.*;
+import com.pathplanner.lib.commands.*;
+import com.pathplanner.lib.controllers.*;
+import com.pathplanner.lib.*;
+
+
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -38,7 +44,7 @@ public class RobotContainer {
 
   // The driver's controller
   PS4Controller m_driverController = new PS4Controller(OIConstants.kDriverControllerPort);
-
+  NamedCommands.registerCommand("Path2", DriveSubsystem.Path2Command());
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
