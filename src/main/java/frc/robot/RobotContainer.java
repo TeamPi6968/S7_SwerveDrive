@@ -29,6 +29,7 @@ import com.pathplanner.lib.auto.*;
 import com.pathplanner.lib.commands.*;
 import com.pathplanner.lib.controllers.*;
 import com.pathplanner.lib.*;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 
 
@@ -44,10 +45,13 @@ public class RobotContainer {
 
   // The driver's controller
   PS4Controller m_driverController = new PS4Controller(OIConstants.kDriverControllerPort);
-  NamedCommands.registerCommand("Path2", DriveSubsystem.Path2Command());
+//   NamedCommands.registerCommand("Path2", DriveSubsystem.Path2Command());
+  PathPlannerTrajectory examplePath = PathPlanner.loadPath("Path 2", new   PathConstraints(3, 4));
   /**
+   * 
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+  PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1.2);
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
