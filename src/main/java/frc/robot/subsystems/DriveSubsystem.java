@@ -14,11 +14,16 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.geometry.Translation2d;
 
 import com.kauailabs.navx.frc.AHRS;
+
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ModuleConstants;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.PIDController;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -67,6 +72,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+    m_frontLeft.SetPID(0.5, 0, 0);
+    m_frontRight.SetPID(1, 0, 0);
+    m_rearLeft.SetPID(0.5, 0, 0);
+    m_rearRight.SetPID(1, 0, 0);
   }
 
   @Override
@@ -81,6 +90,10 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
         SmartDashboard.putNumber("Gyro angle", getHeading());
+        SmartDashboard.putNumber("FL_Position", m_frontLeft.getPositionTurningEncoder());
+        SmartDashboard.putNumber("FR_Position", m_frontRight.getPositionTurningEncoder());
+        SmartDashboard.putNumber("RL_Position", m_rearLeft.getPositionTurningEncoder());
+        SmartDashboard.putNumber("RR_Position", m_rearRight.getPositionTurningEncoder());
   }
 
   /**
@@ -243,4 +256,6 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
+
+  
 }
