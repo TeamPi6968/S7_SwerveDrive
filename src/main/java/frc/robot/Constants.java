@@ -68,6 +68,11 @@ public final class Constants {
 
     public static final boolean kGyroReversed = false;
 
+    public static final boolean FrontLeftDrivingInverted  = false;
+    public static final boolean RearLeftDrivingInverted   = false;
+    public static final boolean FrontRightDrivingInverted = false;
+    public static final boolean RearRightDrivingInverted  = false;
+
     public static final HashMap<String, Command> AUTO_EVENT_MAP = new HashMap<>();
     
   }
@@ -109,6 +114,12 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
+    /* Drive Motor Characterization Values 
+    * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
+    public static final double driveKS = (0.32 / 12); //TODO: This must be tuned to specific robot
+    public static final double driveKV = (1.51 / 12);
+    public static final double driveKA = (0.27 / 12);
+
     public static final double kTurningP = 1;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
@@ -121,6 +132,12 @@ public final class Constants {
 
     public static final int kDrivingMotorCurrentLimit = 50; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
+    
+    /* Swerve Current Limiting */
+    public static final int angleContinuousCurrentLimit = 30;
+    public static final int anglePeakCurrentLimit = 40;
+    public static final double anglePeakCurrentDuration = 0.1;
+    public static final boolean angleEnableCurrentLimit = true;
   }
 
   public static final class OIConstants {
