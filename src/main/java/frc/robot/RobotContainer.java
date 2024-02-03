@@ -16,8 +16,8 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.Swerve;
+import frc.robot.Constants.Controller;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -48,7 +48,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
   // The driver's controller
-  FakePS4Controller m_driverController = new FakePS4Controller(OIConstants.kDriverControllerPort);
+  FakePS4Controller m_driverController = new FakePS4Controller(Controller.Driver.kControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -63,9 +63,9 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getLeftY(), Controller.Driver.kDeadband),
+                -MathUtil.applyDeadband(m_driverController.getLeftX(), Controller.Driver.kDeadband),
+                -MathUtil.applyDeadband(m_driverController.getRightX(), Controller.Driver.kDeadband),
                 true, true),
             m_robotDrive));
   }
@@ -99,7 +99,7 @@ public class RobotContainer {
         AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics);
+        .setKinematics(Swerve.kDriveKinematics);
 
     // // An example trajectory to follow. All units in meters.
     // Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
@@ -128,7 +128,7 @@ public class RobotContainer {
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         exampleTrajectory,
         m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
+        Swerve.kDriveKinematics,
         // Position controllers
         xController,
         yController,
