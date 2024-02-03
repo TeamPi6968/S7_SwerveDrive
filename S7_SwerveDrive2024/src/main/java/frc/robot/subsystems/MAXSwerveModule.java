@@ -19,6 +19,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 //import com.ctre.phoenix6.ErrorCode;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -117,6 +118,7 @@ public class MAXSwerveModule {
     TalonConfiguration.Slot0.kP = ModuleConstants.kDrivingP;
     TalonConfiguration.Slot0.kI = ModuleConstants.kDrivingI;
     TalonConfiguration.Slot0.kD = ModuleConstants.kDrivingD;
+    
     // m_drivingTalonFx.config_kP(0, ModuleConstants.kDrivingP);
     // m_drivingTalonFx.config_kI(0, ModuleConstants.kDrivingI);
     // m_drivingTalonFx.config_kD(0, ModuleConstants.kDrivingD);
@@ -145,13 +147,15 @@ public class MAXSwerveModule {
     // operation, it will maintain the above configurations.
     // m_drivingTalonFx.burnFlash();
     m_turningSparkMax.burnFlash();
-    m_drivingTalonFx.getConfigurator().apply(motorConfigs);
 
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
+    
     m_drivingTalonFx.setPosition(0);
     // m_drivingTalonFx.setSelectedSensorPosition(0);
     // m_drivingEncoder.setPosition(0);
+
+    TalonConfigurator.apply(TalonConfiguration);
     
   }
 
@@ -163,6 +167,7 @@ public class MAXSwerveModule {
   public SwerveModuleState getState() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
+    m_drivingTalonFx.getVelocity();
     return new SwerveModuleState(m_drivingTalonFx.getSelectedSensorVelocity(),
         new Rotation2d(m_turningEncoder.getPosition() - m_chassisAngularOffset));
   }
