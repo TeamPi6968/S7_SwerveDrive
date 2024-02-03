@@ -23,7 +23,7 @@ import frc.robot.Constants.ModuleConstants;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
-import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+//import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules

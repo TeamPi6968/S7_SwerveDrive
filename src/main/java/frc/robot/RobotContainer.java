@@ -27,14 +27,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.FakePS4Controller;
 import frc.robot.subsystems.FakePS4Controller.Button;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.FollowPathWithEvents;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+//import com.pathplanner.lib.PathPlanner;
+// import com.pathplanner.lib.PathPlannerTrajectory;
+// import com.pathplanner.lib.commands.FollowPathWithEvents;
+// import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 
 
@@ -90,9 +89,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    List<PathPlannerTrajectory> AutoPath = PathPlanner.loadPathGroup("Path_2", 
-                                                                     AutoConstants.kMaxSpeedMetersPerSecond, 
-                                                                     AutoConstants.kMaxAccelerationMetersPerSecondSquared);
+    // List<PathPlannerTrajectory> AutoPath = PathPlanner.loadPathGroup("Path_2", 
+    //                                                                  AutoConstants.kMaxSpeedMetersPerSecond, 
+    //                                                                  AutoConstants.kMaxAccelerationMetersPerSecondSquared);
     //new SequentialCommandGroup(new FollowPathWithEvents(null, AutoPath.get(0), DriveConstants.AUTO_EVENT_MAP));
 
     // Create config for trajectory
