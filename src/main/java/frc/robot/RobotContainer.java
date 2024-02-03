@@ -59,15 +59,14 @@ public class RobotContainer {
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY(), Controller.Driver.kDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), Controller.Driver.kDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), Controller.Driver.kDeadband),
-                true, true),
-            m_robotDrive));
+      // The left stick controls translation of the robot.
+      // Turning is controlled by the X axis of the right stick.
+      new RunCommand(() -> m_robotDrive.drive(-MathUtil.applyDeadband(m_driverController.getLeftY(), Controller.Driver.kDeadband),
+                                              -MathUtil.applyDeadband(m_driverController.getLeftX(), Controller.Driver.kDeadband),
+                                              -MathUtil.applyDeadband(m_driverController.getRightX(), Controller.Driver.kDeadband),
+                                true, 
+                                    true),
+                                              m_robotDrive));
   }
 
   /**
@@ -94,13 +93,10 @@ public class RobotContainer {
     //                                                                  AutoConstants.kMaxAccelerationMetersPerSecondSquared);
     //new SequentialCommandGroup(new FollowPathWithEvents(null, AutoPath.get(0), DriveConstants.AUTO_EVENT_MAP));
 
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(Swerve.kDriveKinematics);
-
+    // Create config for trajectory (Add kinematics to ensure max speed is actually obeyed)
+    TrajectoryConfig config = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond,
+                                                   AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Swerve.kDriveKinematics);
+        
     // // An example trajectory to follow. All units in meters.
     // Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
     //     // Start at the origin facing the +X direction
@@ -121,24 +117,24 @@ public class RobotContainer {
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
     PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
 
-    var thetaController = new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+    var thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, 
+                                                    AutoConstants.kThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-        exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        Swerve.kDriveKinematics,
-        // Position controllers
-        xController,
-        yController,
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
+                                                                                  m_robotDrive::getPose, // Functional interface to feed supplier
+                                                                                  Swerve.kDriveKinematics,
+                                                                                  // Position controllers
+                                                                                  xController,
+                                                                                  yController,
+                                                                                  thetaController,
+                                                                                  m_robotDrive::setModuleStates,
+                                                                                  m_robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
     m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
 
+    // SmartDashboard
     SmartDashboard.putNumber("ErrorPosition_X", xController.getPositionError());
     SmartDashboard.putNumber("ErrorPosition_Y", yController.getPositionError());
     SmartDashboard.putNumber("ErrorPosition_theta", thetaController.getPositionError());
