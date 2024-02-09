@@ -12,7 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.math.controller.PIDController;
+//import edu.wpi.first.math.controller.PIDController;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -33,8 +33,8 @@ public final class Constants {
   public static final class Swerve {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 0.5 * 4.8;// max 4.8
-    public static final double kMaxAngularSpeed         = 0.25 * 2 * Math.PI; // radians per second
+    public static final double kMaxSpeedMetersPerSecond = 0.3 * 4.8;// max 4.8
+    public static final double kMaxAngularSpeed         = 1 * 2 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate  = 1.2; // radians per second
     public static final double kMagnitudeSlewRate  = 1.8; // percent per second (1 = 100%)
@@ -42,9 +42,9 @@ public final class Constants {
 
     // Chassis configuration
     // Distance between centers of right and left wheels on robot
-    public static final double kTrackWidth = Units.inchesToMeters(26.5);
+    public static final double kTrackWidth = Units.inchesToMeters(19.14); //486.1 mm
     // Distance between front and back wheels on robot
-    public static final double kWheelBase  = Units.inchesToMeters(26.5);
+    public static final double kWheelBase  = Units.inchesToMeters(19.14); //486.1 mm
     
     public static final SwerveDriveKinematics kDriveKinematics = 
       new SwerveDriveKinematics(new Translation2d(kWheelBase / 2, kTrackWidth / 2),

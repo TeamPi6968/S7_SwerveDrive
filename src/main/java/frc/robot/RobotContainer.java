@@ -13,7 +13,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.Swerve;
@@ -21,13 +20,20 @@ import frc.robot.Constants.Controller;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+// Fake controller
 import frc.robot.subsystems.FakePS4Controller;
 import frc.robot.subsystems.FakePS4Controller.Button;
 
-import java.util.ArrayList;
+// Normal controller
+// import edu.wpi.first.wpilibj.PS4Controller;
+// import edu.wpi.first.wpilibj.PS4Controller.Button;
+
+
+//import java.util.ArrayList;
 import java.util.List;
 
 //import com.pathplanner.lib.PathPlanner;
@@ -75,8 +81,7 @@ public class RobotContainer {
    * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
    * subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling
-   * passing it to a
-   * {@link JoystickButton}.
+   * passing it to a   * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, Button.kR1.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
@@ -109,9 +114,12 @@ public class RobotContainer {
 
     // 2. Generate trajectory with a modified intermediate point
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+      // Starting coordinate [0,0]
       new Pose2d(0, 0, new Rotation2d(0)),
-      List.of(new Translation2d(2, 0)), // Adjusted intermediate point
-      new Pose2d(2, 0, Rotation2d.fromDegrees(0)), // Ending pose adjusted for a straight path
+      // Adjusted intermediate point [2,0]
+      List.of(new Translation2d(2, 0)),
+      // Ending pose [2,0]
+      new Pose2d(2, 0, Rotation2d.fromDegrees(0)), 
       config);
 
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
